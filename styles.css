@@ -7,9 +7,24 @@
 }
 
 :root{
-
+    margin:0;
 }
 
 header{
     text-align: center;
+}
+
+.container{
+    padding:10px;
+}
+
+.gameboard{
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(3, 150px);
+    justify-content: center;
+}
+
+.box{
+    border: 1px solid #000;
 }
