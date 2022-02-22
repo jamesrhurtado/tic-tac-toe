@@ -41,12 +41,12 @@ const displayController = (() => {
 })();
 
 
-const game = () => {
+const game = (() => {
     let user1
     let user2
     let userTurn
 
-    const setupGame = (player1, player2) => {
+    const setupPlayers = (player1, player2) => {
         user1 = player1
         user2 = player2
         displayController.play()
@@ -65,23 +65,30 @@ const game = () => {
     const move = (box) => {
         let userPlayed = userTurn.markBox()
         if(userPlayed){
-            //check victory
-            //check tie
+            if(isAVictory){
+                alert(`${userTurn.getName()} won`)
+            }else if(isATie){
+                alert(`It is a tie`)
+            }else{
+                changeTurn()
+            }
         }
     }
 
-
     const isAVictory = () => {
-        if (board.gameboard[0] === board.gameboard[1] && board.gameboard[1] === board.gameboard[2] && board.gameboard[0] !== '') {return true} 
-        if (board.gameboard[3] === board.gameboard[4] && board.gameboard[4] === board.gameboard[5] && board.gameboard[3] !== '') {return true}
-        if (board.gameboard[6] === board.gameboard[7] && board.gameboard[7] === board.gameboard[8] && board.gameboard[6] !== '') {return true}
-        if (board.gameboard[0] === board.gameboard[3] && board.gameboard[3] === board.gameboard[6] && board.gameboard[0] !== '') {return true}
-        if (board.gameboard[1] === board.gameboard[4] && board.gameboard[4] === board.gameboard[7] && board.gameboard[1] !== '') {return true}
-        if (board.gameboard[2] === board.gameboard[5] && board.gameboard[5] === board.gameboard[8] && board.gameboard[2] !== '') {return true}
-        if (board.gameboard[0] === board.gameboard[4] && board.gameboard[4] === board.gameboard[8] && board.gameboard[0] !== '') {return true}
-        if (board.gameboard[2] === board.gameboard[4] && board.gameboard[4] === board.gameboard[6] && board.gameboard[2] !== '') {return true}
+        if ((board.gameboard[0] === board.gameboard[1] && board.gameboard[1] === board.gameboard[2] && board.gameboard[0] !== '') ||
+            (board.gameboard[3] === board.gameboard[4] && board.gameboard[4] === board.gameboard[5] && board.gameboard[3] !== '') ||
+            (board.gameboard[6] === board.gameboard[7] && board.gameboard[7] === board.gameboard[8] && board.gameboard[6] !== '') ||
+            (board.gameboard[0] === board.gameboard[3] && board.gameboard[3] === board.gameboard[6] && board.gameboard[0] !== '') ||
+            (board.gameboard[1] === board.gameboard[4] && board.gameboard[4] === board.gameboard[7] && board.gameboard[1] !== '') ||
+            (board.gameboard[2] === board.gameboard[5] && board.gameboard[5] === board.gameboard[8] && board.gameboard[2] !== '') ||
+            (board.gameboard[0] === board.gameboard[4] && board.gameboard[4] === board.gameboard[8] && board.gameboard[0] !== '') ||
+            (board.gameboard[2] === board.gameboard[4] && board.gameboard[4] === board.gameboard[6] && board.gameboard[2] !== '')) {
+                return true}
+             else{
+                return false
+            }
     }
-
 
     const isATie = () => {
         for(let i=0; i<board.gameboard.length; i++){
@@ -92,25 +99,18 @@ const game = () => {
         return true
     }
 
-
-}
-
-
+    return {setupPlayers, move}
+})();
 
 
-
-
-
-
-
-
-/*
-const boxes = document.querySelectorAll('.box')
-
-
-for(let i=0; boxes.length; i++){
-    boxes[i].addEventListener('click', ()=>{
-        boxes[i].setAttribute("style", "background-color: red;")
+const generalController = (() =>{
+    const btnNewGame = document.querySelector('.btn-new')
+    btnNewGame.addEventListener('click', () =>{
+        let name1 = prompt("What is the name of the first player? ")
+        let name2 = prompt("What is the name of the second player? ")
+        let player1 = Player(name1 || "Juan", 'x')
+        let player2 = Player(name2 || 'Juan 2', 'o')
+        Game.setupPlayers(player1, player2)
     })
-}
-*/
+})()
+
