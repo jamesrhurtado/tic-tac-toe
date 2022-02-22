@@ -14,10 +14,10 @@ const player = (name, figure) => {
             board.gameboard[box] == getFigure()
         }
     }
-    return {getName, getFigure, markBox}
+    return { getName, getFigure, markBox }
 }
 
-const displayMoves = (() => {
+const displayController = (() => {
     const boxes = document.querySelectorAll('.box')
     const play = () =>{
         for(let i=0; i<board.gameboard.length; i++){
@@ -34,11 +34,43 @@ const displayMoves = (() => {
             boxes[i].textContent = board.gameboard[i]
         }
     }
-    return {
-        play, updateGameboard
-    }
+    return { play, updateGameboard }
 })();
-displayMoves.play()
+
+
+const game = () => {
+    let user1
+    let user2
+    let userTurn
+
+    const setupGame = (player1, player2) => {
+        user1 = player1
+        user2 = player2
+        displayController.play()
+    }
+
+    const changeTurn = () => {
+        if(userTurn == null){
+            userTurn = user1
+        }else if(userTurn === user1.getName()){
+            userTurn = user2
+        }else{
+            userTurn = user1
+        }
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
 /*
 const boxes = document.querySelectorAll('.box')
 
