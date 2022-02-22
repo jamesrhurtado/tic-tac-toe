@@ -11,7 +11,7 @@ const player = (name, figure) => {
     const getFigure = () => figure
     const markBox = (box) => {
         if(board.gameboard[box] == ''){
-            board.gameboard[box] == getFigure()
+            board.gameboard[box] = getFigure()
             return true
         }else{
             return false
@@ -26,8 +26,7 @@ const displayController = (() => {
         for(let i=0; i<board.gameboard.length; i++){
             boxes[i].textContent = board.gameboard[i]
             boxes[i].addEventListener('click', ()=>{
-                boxes[i].setAttribute("style", "background-color: red;")
-                //send ith box to mark
+                game.move(i)
             });
         }
     }
@@ -37,7 +36,14 @@ const displayController = (() => {
             boxes[i].textContent = board.gameboard[i]
         }
     }
-    return { play, updateGameboard }
+
+    const resetGameboard = () => {
+        for(let i=0; i<board.gameboard.length; i++){
+            board.gameboard[i] = ''
+        }
+        updateGameboard()
+    }
+    return { play, updateGameboard, resetGameboard }
 })();
 
 
@@ -50,12 +56,13 @@ const game = (() => {
         user1 = player1
         user2 = player2
         displayController.play()
+        changeTurn()
     }
 
     const changeTurn = () => {
-        if(userTurn == null){
+        if(userTurn === undefined){
             userTurn = user1
-        }else if(userTurn === user1.getName()){
+        }else if(userTurn.getName() === user1.getName()){
             userTurn = user2
         }else{
             userTurn = user1
@@ -63,11 +70,13 @@ const game = (() => {
     }
 
     const move = (box) => {
-        let userPlayed = userTurn.markBox()
+        let userPlayed = userTurn.markBox(box)
+        console.log(userTurn.getName())
         if(userPlayed){
-            if(isAVictory){
+            displayController.updateGameboard()
+            if(isAVictory()){
                 alert(`${userTurn.getName()} won`)
-            }else if(isATie){
+            }else if(isATie()){
                 alert(`It is a tie`)
             }else{
                 changeTurn()
@@ -106,11 +115,12 @@ const game = (() => {
 const generalController = (() =>{
     const btnNewGame = document.querySelector('.btn-new')
     btnNewGame.addEventListener('click', () =>{
+        displayController.resetGameboard()
         let name1 = prompt("What is the name of the first player? ")
         let name2 = prompt("What is the name of the second player? ")
-        let player1 = Player(name1 || "Juan", 'x')
-        let player2 = Player(name2 || 'Juan 2', 'o')
-        Game.setupPlayers(player1, player2)
+        let player1 = player(name1 || "Juan", 'x')
+        let player2 = player(name2 || 'Juan 2', 'o')
+        game.setupPlayers(player1, player2)
     })
 })()
 
