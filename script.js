@@ -1,5 +1,5 @@
-const board = (()=>{
-    let gameboard = [['', '', ''], ['', '', ''], ['', '', '']]
+const board = (() => {
+    let gameboard = ['', '', '', '', '', '', '', '', '']
     return {gameboard}
 })();
 
@@ -9,16 +9,36 @@ const board = (()=>{
 const player = (name, figure) => {
     const getName = () =>  name
     const getFigure = () => figure
-    const markBox = (row, column) => {
-        if(board.gameboard[row][column] == ''){
-            board.gameboard[row][column] == getFigure()
+    const markBox = (box) => {
+        if(board.gameboard[box] == ''){
+            board.gameboard[box] == getFigure()
         }
     }
     return {getName, getFigure, markBox}
 }
 
+const displayMoves = (() => {
+    const boxes = document.querySelectorAll('.box')
+    const play = () =>{
+        for(let i=0; i<board.gameboard.length; i++){
+            boxes[i].textContent = board.gameboard[i]
+            boxes[i].addEventListener('click', ()=>{
+                boxes[i].setAttribute("style", "background-color: red;")
+                //send ith box to mark
+            });
+        }
+    }
 
-
+    const updateGameboard = () => {
+        for(let i=0; i<board.gameboard.length; i++){
+            boxes[i].textContent = board.gameboard[i]
+        }
+    }
+    return {
+        play, updateGameboard
+    }
+})();
+displayMoves.play()
 /*
 const boxes = document.querySelectorAll('.box')
 
