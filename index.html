@@ -6,15 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="script.js" defer></script>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/4c536a6bd5.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="assets/favicon-cat.ico">
     <title>Tic Tac Toe</title>
 </head>
 <header>
     <div>
-        <h1>Tic Tac Toe</h1>
+        <h1>TIC TAC TOE</h1>
     </div>
 </header>
 <body>
     <div class="container">
+        <div class="btn-container">
+            <button class="btn btn-new">New Game</button>
+        </div>
         <div class="gameboard">
             <div class="box box-1"> </div>
             <div class="box box-2"> </div>
@@ -26,7 +31,18 @@
             <div class="box box-8"> </div>
             <div class="box box-9"> </div>
         </div>
-        <button class="btn btn-new">New Game</button>
     </div>
+    <footer class="footer">
+        <p>
+          Copyright ©
+          <script>
+            document.write(new Date().getFullYear())
+          </script>
+          jrenzzo
+        </p>
+        <a href="https://github.com/jrenzzo" target="_blank">
+          <i class="fab fa-github"></i></a>
+    </footer>
+    <div class= "overlay" id="overlay"></div>
 </body>
 </html>

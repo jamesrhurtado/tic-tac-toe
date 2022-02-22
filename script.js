@@ -1,9 +1,11 @@
+'user strict'
+
 const board = (() => {
     let gameboard = ['', '', '', '', '', '', '', '', '']
     return {gameboard}
 })();
 
-
+//-----------------------------------------------
 
 //factory functions
 const player = (name, figure) => {
@@ -19,14 +21,18 @@ const player = (name, figure) => {
     }
     return { getName, getFigure, markBox }
 }
+//-----------------------------------------------
 
+//-----------------------------------------------
 const displayController = (() => {
     const boxes = document.querySelectorAll('.box')
     const play = () =>{
         for(let i=0; i<board.gameboard.length; i++){
             boxes[i].textContent = board.gameboard[i]
             boxes[i].addEventListener('click', ()=>{
-                game.move(i)
+                if(!game.getIsOver()){
+                    game.mark(i)
+                }
             });
         }
     }
@@ -45,18 +51,22 @@ const displayController = (() => {
     }
     return { play, updateGameboard, resetGameboard }
 })();
+//-----------------------------------------------
 
 
+//-----------------------------------------------
 const game = (() => {
     let user1
     let user2
     let userTurn
+    let isOver
 
     const setupPlayers = (player1, player2) => {
         user1 = player1
         user2 = player2
         displayController.play()
         changeTurn()
+        isOver = false
     }
 
     const changeTurn = () => {
@@ -69,20 +79,23 @@ const game = (() => {
         }
     }
 
-    const move = (box) => {
+    const mark = (box) => {
         let userPlayed = userTurn.markBox(box)
         console.log(userTurn.getName())
         if(userPlayed){
             displayController.updateGameboard()
             if(isAVictory()){
                 alert(`${userTurn.getName()} won`)
+                isOver = true
             }else if(isATie()){
                 alert(`It is a tie`)
+                isOver = true
             }else{
                 changeTurn()
             }
         }
     }
+    const getIsOver = () => isOver
 
     const isAVictory = () => {
         if ((board.gameboard[0] === board.gameboard[1] && board.gameboard[1] === board.gameboard[2] && board.gameboard[0] !== '') ||
@@ -108,13 +121,15 @@ const game = (() => {
         return true
     }
 
-    return {setupPlayers, move}
+    return {setupPlayers, mark, getIsOver}
 })();
+//-----------------------------------------------
 
-
+//-----------------------------------------------
 const generalController = (() =>{
     const btnNewGame = document.querySelector('.btn-new')
     btnNewGame.addEventListener('click', () =>{
+        
         displayController.resetGameboard()
         let name1 = prompt("What is the name of the first player? ")
         let name2 = prompt("What is the name of the second player? ")
@@ -124,3 +139,4 @@ const generalController = (() =>{
     })
 })()
 
+//-----------------------------------------------
