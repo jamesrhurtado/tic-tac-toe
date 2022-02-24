@@ -1,5 +1,7 @@
 'user strict'
 const overlay = document.getElementById("overlay")
+const userTurnField = document.querySelector('.user-turn')
+const finalResult = document.querySelector('.game-outcome')
 const board = (() => {
     let gameboard = ['', '', '', '', '', '', '', '', '']
     return {gameboard}
@@ -77,6 +79,7 @@ const game = (() => {
         }else{
             userTurn = user1
         }
+        userTurnField.textContent = userTurn.getName()
     }
 
     const mark = (box) => {
@@ -85,10 +88,17 @@ const game = (() => {
         if(userPlayed){
             displayController.updateGameboard()
             if(isAVictory()){
-                alert(`${userTurn.getName()} won`)
+                let winnerMessage = document.createElement('span')
+                let winnerPlayer = document.createElement('span')
+                winnerMessage.textContent = "Congrats! The winner is "
+                winnerPlayer.textContent = userTurn.getName()
+                finalResult.appendChild(winnerMessage)
+                finalResult.appendChild(winnerPlayer)
                 isOver = true
             }else if(isATie()){
-                alert(`It is a tie`)
+                let tieMessage = document.createElement('span')
+                tieMessage.textContent = "It is a tie!"
+                finalResult.appendChild(tieMessage)
                 isOver = true
             }else{
                 changeTurn()
@@ -130,6 +140,7 @@ const generalController = (() =>{
     overlay.classList.add('active')
     const btnNewGame = document.querySelector('.btn-new')
     btnNewGame.addEventListener('click', () =>{
+        finalResult.textContent = ""
         displayController.resetGameboard()
         let name1 = prompt("What is the name of the first player? ")
         let name2 = prompt("What is the name of the second player? ")

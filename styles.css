@@ -33,21 +33,38 @@ body{
     background-color: var(--body-bg)
 }
 .container{
-    padding:40px;
+    padding:20px;
     display: flex;
     flex-direction: column;
     gap:20px;
 }
 
+.board-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 80px;
+}
+
+.board-info{
+    color: #fff;
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.5em;
+}
+
+.board-info .turn, .board-info .game-outcome{
+    margin:20px;
+}
+
 .gameboard{
     display: grid;
-    grid-template-columns: repeat(3, 150px);
-    grid-template-rows: repeat(3, 150px);
+    grid-template-columns: repeat(3, 110px);
+    grid-template-rows: repeat(3, 110px);
     justify-content: center;
 }
 
 .box{
-    border: 4px solid #fff;
+    border: 2px solid #fff;
     background-color: var(--box-bg);
     display: flex;
     justify-content: center;
@@ -62,8 +79,8 @@ body{
     background-color: var(--btn-bg);
     color: #fff;
     font-family: 'Roboto Slab', serif;
-    padding: 20px 20px;
-    font-size: 1.3em;
+    padding: 15px 15px;
+    font-size: 1.1em;
     border-style: none;
     border-radius: 15px;
 }
