@@ -1,5 +1,5 @@
 'user strict'
-
+const overlay = document.getElementById("overlay")
 const board = (() => {
     let gameboard = ['', '', '', '', '', '', '', '', '']
     return {gameboard}
@@ -127,14 +127,15 @@ const game = (() => {
 
 //-----------------------------------------------
 const generalController = (() =>{
+    overlay.classList.add('active')
     const btnNewGame = document.querySelector('.btn-new')
     btnNewGame.addEventListener('click', () =>{
-        
         displayController.resetGameboard()
         let name1 = prompt("What is the name of the first player? ")
         let name2 = prompt("What is the name of the second player? ")
         let player1 = player(name1 || "Juan", 'x')
         let player2 = player(name2 || 'Juan 2', 'o')
+        overlay.classList.remove('active')
         game.setupPlayers(player1, player2)
     })
 })()
